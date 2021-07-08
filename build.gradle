@@ -4,7 +4,6 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 group 'com.dynxsty.bot'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -21,6 +20,20 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
 }
+
+jar {
+    archiveName="LinkChecker.zip"
+    from {
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+
+        configurations.compile.findAll{ !it.name.endsWith('pom') } .collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest{ attributes("Manifest-Version": "1.0", "Main-Class": "com.dynxsty.linkchecker.Bot") }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA' }
 
 tasks.withType(JavaCompile){ options.encoding = 'UTF-8'}
 test { useJUnitPlatform() }
