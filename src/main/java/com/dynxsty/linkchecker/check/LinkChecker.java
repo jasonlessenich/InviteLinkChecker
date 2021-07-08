@@ -84,8 +84,10 @@ public class LinkChecker extends ListenerAdapter {
                         .setTimestamp(new Date().toInstant())
                         .build();
 
-                event.getJDA().getGuilds().get(0).getTextChannelById("711245550271594556")
-                        .sendMessage(Constants.LINK_AVAILABLE_MESSAGE).setEmbeds(embed).queue();
+                event.getJDA().getGuildById(new ConfigString("guild_id", "null").getValue())
+                        .getTextChannelById(new ConfigString("text_id", "null").getValue())
+                        .sendMessage(new ConfigString("link_available_msg", "null").getValue())
+                        .setEmbeds(embed).queue();
             }
         }, 0, new ConfigInt("interval", 5).getValue(), new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue());
     }

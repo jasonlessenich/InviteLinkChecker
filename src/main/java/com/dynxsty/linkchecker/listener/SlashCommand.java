@@ -4,6 +4,7 @@ import com.dynxsty.linkchecker.Bot;
 import com.dynxsty.linkchecker.Constants;
 import com.dynxsty.linkchecker.check.LinkChecker;
 import com.dynxsty.linkchecker.config.Config;
+import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -26,7 +27,7 @@ public class SlashCommand extends ListenerAdapter {
     @Override
     public void onReady(ReadyEvent event) {
 
-        CommandListUpdateAction updateAction = event.getJDA().getGuildById(Constants.GUILD_ID).updateCommands();
+        CommandListUpdateAction updateAction = event.getJDA().getGuildById(new ConfigString("guild_id", "null").getValue()).updateCommands();
 
         updateAction.addCommands(
                 new CommandData("config", "the config")
@@ -45,10 +46,10 @@ public class SlashCommand extends ListenerAdapter {
 
 
 
-        if (!event.getMember().getId().equals(Constants.OWNER_ID)) {
+        if (!event.getMember().getId().equals(new ConfigString("owner_id", "null").getValue())) {
 
             logger.info(event.getUser().getAsTag() + " tried to use /" + event.getName() + " " + event.getSubcommandName());
-            event.reply("Only ``" + event.getGuild().getMemberById(Constants.OWNER_ID).getUser().getAsTag() + "`` can execute this command").setEphemeral(true).queue();
+            event.reply("Only ``" + event.getGuild().getMemberById(new ConfigString("owner_id", "null").getValue()).getUser().getAsTag() + "`` can execute this command").setEphemeral(true).queue();
             return;
         }
 
