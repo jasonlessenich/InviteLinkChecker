@@ -56,6 +56,8 @@ public class LinkChecker extends ListenerAdapter {
     public void onReady(ReadyEvent event) {
 
         AtomicInteger i = new AtomicInteger();
+        int interval = new ConfigInt("interval", 5).getValue();
+        String timeUnit = new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue().name().toLowerCase();
 
         threadPool.scheduleWithFixedDelay(() -> {
 
@@ -67,8 +69,8 @@ public class LinkChecker extends ListenerAdapter {
             try {
 
                 Invite.resolve(event.getJDA(), code).complete();
-                logger.info("Invite Link (discord.gg/" +  code + ") is taken. Next check in " + new ConfigInt("interval", 5).getValue() + " "
-                        + new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue().name().toLowerCase() + ".");
+                logger.info("Invite Link (discord.gg/" +  code + ") is taken. Next check in " + interval + " "
+                        + timeUnit + ".");
 
             } catch (ErrorResponseException e) {
 
