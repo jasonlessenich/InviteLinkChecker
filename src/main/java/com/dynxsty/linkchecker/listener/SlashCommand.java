@@ -44,8 +44,6 @@ public class SlashCommand extends ListenerAdapter {
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
 
-
-
         if (!event.getMember().getId().equals(new ConfigString("owner_id", "null").getValue())) {
 
             logger.info(event.getUser().getAsTag() + " tried to use /" + event.getName() + " " + event.getSubcommandName());
