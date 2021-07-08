@@ -2,6 +2,7 @@ package com.dynxsty.linkchecker.listener;
 
 import com.dynxsty.linkchecker.Bot;
 import com.dynxsty.linkchecker.Constants;
+import com.dynxsty.linkchecker.check.LinkChecker;
 import com.dynxsty.linkchecker.config.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -10,6 +11,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -17,6 +20,8 @@ import static net.dv8tion.jda.api.interactions.commands.OptionType.INTEGER;
 import static net.dv8tion.jda.api.interactions.commands.OptionType.STRING;
 
 public class SlashCommand extends ListenerAdapter {
+
+    private static final Logger logger = LoggerFactory.getLogger(LinkChecker.class);
 
     @Override
     public void onReady(ReadyEvent event) {
@@ -38,7 +43,11 @@ public class SlashCommand extends ListenerAdapter {
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
 
+
+
         if (!event.getMember().getId().equals(Constants.OWNER_ID)) {
+
+            logger.info(event.getUser().getAsTag() + " tried to use /" + event.getName() + " " + event.getSubcommandName());
             event.reply("Only ``" + event.getGuild().getMemberById(Constants.OWNER_ID).getUser().getAsTag() + "`` can execute this command").setEphemeral(true).queue();
             return;
         }
@@ -47,6 +56,9 @@ public class SlashCommand extends ListenerAdapter {
         Config config = new Config();
 
         try {
+
+            logger.info(event.getUser().getAsTag() + " used /" + event.getName() + " " + event.getSubcommandName());
+
         switch (event.getName()) {
 
             case "config":
