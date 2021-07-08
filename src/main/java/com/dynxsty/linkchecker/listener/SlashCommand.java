@@ -26,7 +26,7 @@ public class SlashCommand extends ListenerAdapter {
     @Override
     public void onReady(ReadyEvent event) {
 
-        CommandListUpdateAction updateAction = event.getJDA().getGuilds().get(0).updateCommands();
+        CommandListUpdateAction updateAction = event.getJDA().getGuildById(Constants.GUILD_ID).updateCommands();
 
         updateAction.addCommands(
                 new CommandData("config", "the config")
