@@ -21,7 +21,7 @@ import static net.dv8tion.jda.api.interactions.commands.OptionType.STRING;
 
 public class SlashCommand extends ListenerAdapter {
 
-    private static final Logger logger = LoggerFactory.getLogger(LinkChecker.class);
+    private static final Logger logger = LoggerFactory.getLogger(SlashCommand.class);
 
     @Override
     public void onReady(ReadyEvent event) {
