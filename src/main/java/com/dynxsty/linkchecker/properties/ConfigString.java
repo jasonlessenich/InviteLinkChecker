@@ -1,7 +1,5 @@
 package com.dynxsty.linkchecker.properties;
 
-import java.util.ArrayList;
-
 public class ConfigString extends ConfigElement {
     private String value;
 

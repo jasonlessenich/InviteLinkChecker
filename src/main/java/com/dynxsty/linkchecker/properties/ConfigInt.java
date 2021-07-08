@@ -1,7 +1,5 @@
 package com.dynxsty.linkchecker.properties;
 
-import java.util.ArrayList;
-
 public class ConfigInt extends ConfigElement {
     private int value;
 

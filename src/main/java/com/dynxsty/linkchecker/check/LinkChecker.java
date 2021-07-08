@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -77,7 +75,7 @@ public class LinkChecker extends ListenerAdapter {
                 logger.warn("ErrorResponseException triggered! Invite Link might be available!");
 
                 var embed = new EmbedBuilder()
-                        .setColor(Constants.GRAY)
+                        .setColor(Constants.EMBED_GRAY)
                         .setThumbnail(event.getJDA().getSelfUser().getEffectiveAvatarUrl())
                         .setAuthor("ErrorResponseException: " + e.getMeaning(), null, event.getJDA().getSelfUser().getEffectiveAvatarUrl())
                         .setDescription("```Exception triggered!\nLink (discord.gg/" +  code + ") might be available!```")
