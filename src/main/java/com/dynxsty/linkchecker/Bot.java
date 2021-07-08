@@ -1,6 +1,7 @@
 package com.dynxsty.linkchecker;
 
 import com.dynxsty.linkchecker.check.LinkChecker;
+import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -14,7 +15,7 @@ public class Bot {
 
     public static void main(String[] args) throws Exception {
 
-        jda = JDABuilder.createDefault(Constants.token)
+        jda = JDABuilder.createDefault(new ConfigString("token", "null").getValue())
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .enableCache(CacheFlag.ACTIVITY)
