@@ -10,6 +10,8 @@ import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -24,12 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class LinkChecker extends ListenerAdapter {
 
     private static ScheduledExecutorService threadPool = Executors.newSingleThreadScheduledExecutor();
-
-    String timeStamp () {
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        return "[" + dateFormat.format(new Date()) + "] ";
-    }
+    private static final Logger logger = LoggerFactory.getLogger(LinkChecker.class);
 
     void incrementTotalCount() {
 
@@ -65,30 +62,30 @@ public class LinkChecker extends ListenerAdapter {
         threadPool.scheduleWithFixedDelay(() -> {
 
             i.getAndIncrement();
+            updatePresence(event, i);
 
             String code = new ConfigString("code", "java").getValue();
-            updatePresence(event, i);
-            System.out.println(timeStamp() + "Checking... (#" + i + ")");
 
             try {
 
                 Invite.resolve(event.getJDA(), code).complete();
-                System.out.println(timeStamp() + "Link (discord.gg/" +  code + ") is taken. Trying again in " + new ConfigInt("interval", 5).getValue() + " " + new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue().name().toLowerCase());
+                logger.info("Invite Link (discord.gg/" +  code + ") is taken. Next check in " + new ConfigInt("interval", 5).getValue() + " "
+                        + new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue().name().toLowerCase() + ".");
 
             } catch (ErrorResponseException e) {
 
-                System.out.println(timeStamp() + "Exception triggered! Link (discord.gg/" +  code + ") might be available!");
+                logger.warn("ErrorResponseException triggered! Invite Link might be available!");
 
                 var embed = new EmbedBuilder()
-                        .setAuthor("ErrorResponseException: " + e.getMeaning(), null, event.getJDA().getSelfUser().getEffectiveAvatarUrl())
                         .setColor(Constants.GRAY)
                         .setThumbnail(event.getJDA().getSelfUser().getEffectiveAvatarUrl())
-                        .setDescription("```" + timeStamp() + "Exception triggered!\nLink (discord.gg/" +  code + ") might be available!```")
+                        .setAuthor("ErrorResponseException: " + e.getMeaning(), null, event.getJDA().getSelfUser().getEffectiveAvatarUrl())
+                        .setDescription("```Exception triggered!\nLink (discord.gg/" +  code + ") might be available!```")
                         .setTimestamp(new Date().toInstant())
                         .build();
 
                 event.getJDA().getGuilds().get(0).getTextChannelById("711245550271594556")
-                        .sendMessage("<@810481402390118400> <@299555811804315648>").setEmbeds(embed).queue();
+                        .sendMessage("<@810481402390118400> 299555811804315648>").setEmbeds(embed).queue();
             }
         }, 0, new ConfigInt("interval", 5).getValue(), new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue());
     }
