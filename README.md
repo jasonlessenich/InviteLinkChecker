@@ -6,7 +6,7 @@ _(totally not made to let us know when the discord.gg/java vanity url is finally
 # Configuration
 To start up, the bot only needs a ``config.properties`` file in the source directory
 
-sample ``config.properties`` file: 
+sample ``config.properties`` file:
 ```
 #
 #Thu Jul 08 23:43:24 CEST 2021

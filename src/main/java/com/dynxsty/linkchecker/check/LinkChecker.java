@@ -74,13 +74,18 @@ public class LinkChecker extends ListenerAdapter {
 
             } catch (ErrorResponseException e) {
 
-                logger.warn("ErrorResponseException triggered! Invite Link might be available!");
+                if (!e.getMessage().equals("10006: Unknown Invite")) {
+                    logger.warn(e.getClass().getSimpleName() + ": \"" + e.getMessage() + "\"");
+                    return;
+                }
+
+                logger.warn(e.getClass().getSimpleName() + ": \"" + e.getMessage() + "\": Invite Link might be available!");
 
                 var embed = new EmbedBuilder()
                         .setColor(Constants.EMBED_GRAY)
                         .setThumbnail(event.getJDA().getSelfUser().getEffectiveAvatarUrl())
-                        .setAuthor("ErrorResponseException: " + e.getMeaning(), null, event.getJDA().getSelfUser().getEffectiveAvatarUrl())
-                        .setDescription("```Exception triggered!\nLink (discord.gg/" +  code + ") might be available!```")
+                        .setAuthor(e.getClass().getSimpleName(), null, event.getJDA().getSelfUser().getEffectiveAvatarUrl())
+                        .setDescription("```" + e.getMessage() + "\n⋅ Link (discord.gg/" +  code + ") might be available!```")
                         .setTimestamp(new Date().toInstant())
                         .build();
 
