@@ -32,7 +32,7 @@ public class LinkChecker extends ListenerAdapter {
         new ConfigInt("totalCheckCount", 0).setValue(i + 1);
     }
 
-    void updatePresence(ReadyEvent event, AtomicInteger checkCount) {
+    void updatePresence(ReadyEvent event, AtomicInteger checkCount, int interval, String unit) {
 
         RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
         long uptimeMS = rb.getUptime();
@@ -48,7 +48,7 @@ public class LinkChecker extends ListenerAdapter {
         incrementTotalCount();
 
         event.getJDA().getPresence().setActivity(Activity.watching("discord.gg/" + new ConfigString("code", "java").getValue()
-                + " | Check #" + checkCount + " (" + new ConfigInt("totalCheckCount", 0).getValue() + " total)"
+                + " every " + interval + " " + unit + " | Check #" + checkCount + " (" + new ConfigInt("totalCheckCount", 0).getValue() + " total)"
                 + " | " + uptimeDAYS + "d " + uptimeHRS + "h " + uptimeMIN + "min " + uptimeSEC + "s"));
     }
 
@@ -62,7 +62,7 @@ public class LinkChecker extends ListenerAdapter {
         threadPool.scheduleWithFixedDelay(() -> {
 
             i.getAndIncrement();
-            updatePresence(event, i);
+            updatePresence(event, i, interval, timeUnit);
 
             String code = new ConfigString("code", "java").getValue();
 
