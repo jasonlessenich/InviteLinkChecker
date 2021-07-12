@@ -79,13 +79,13 @@ public class LinkChecker extends ListenerAdapter {
                     return;
                 }
 
-                logger.warn(e.getClass().getSimpleName() + ": \"" + e.getMessage() + "\": Invite Link might be available!");
+                logger.warn(e.getClass().getSimpleName() + ": \"" + e.getMessage() + "\": discord.gg/" +  code + " might be available!");
 
                 var embed = new EmbedBuilder()
                         .setColor(Constants.EMBED_GRAY)
                         .setThumbnail(event.getJDA().getSelfUser().getEffectiveAvatarUrl())
                         .setAuthor(e.getClass().getSimpleName(), null, event.getJDA().getSelfUser().getEffectiveAvatarUrl())
-                        .setDescription("```" + e.getMessage() + "\n⋅ Link (discord.gg/" +  code + ") might be available!```")
+                        .setDescription("```" + e.getMessage() + "\n⋅ discord.gg/" +  code + " might be available!```")
                         .setTimestamp(new Date().toInstant())
                         .build();
 
