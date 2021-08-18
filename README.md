@@ -6,7 +6,7 @@ _(totally not made to let us know when the discord.gg/java vanity url is finally
 # Usage
 
 Simply run ``java -jar LinkChecker.jar`` in the command line
-([Java 16 required](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html))
+[→ Java 16 required](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html)
 
 # Configuration
 To start up, the bot only needs a ``config.properties`` file in the source directory
