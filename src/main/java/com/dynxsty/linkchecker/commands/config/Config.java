@@ -1,4 +1,4 @@
-package com.dynxsty.linkchecker.config;
+package com.dynxsty.linkchecker.commands.config;
 
 import com.dynxsty.linkchecker.Bot;
 import com.dynxsty.linkchecker.Constants;

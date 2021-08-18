@@ -2,8 +2,8 @@ package com.dynxsty.linkchecker.listener;
 
 import com.dynxsty.linkchecker.Bot;
 import com.dynxsty.linkchecker.Constants;
-import com.dynxsty.linkchecker.check.LinkChecker;
-import com.dynxsty.linkchecker.config.Config;
+import com.dynxsty.linkchecker.commands.CheckLink;
+import com.dynxsty.linkchecker.commands.config.Config;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -37,7 +37,8 @@ public class SlashCommand extends ListenerAdapter {
                                 new SubcommandData("time-unit", "changes the time unit (requires restart)").addOption(STRING, "unit", "the new time unit", true),
                                 new SubcommandData("interval", "changes the interval (requires restart)").addOption(INTEGER, "int", "the new check-interval", true),
                                 new SubcommandData("invite-code", "changes the invite-code").addOption(STRING, "code", "the new invite code", true),
-                                new SubcommandData("reset-tcc", "resets the total check count")));
+                                new SubcommandData("reset-tcc", "resets the total check count")),
+                new CommandData("check-link", "manually check if the invite link is taken"));
         updateAction.queue();
     }
 
@@ -69,6 +70,8 @@ public class SlashCommand extends ListenerAdapter {
                     case "invite-code": config.onConfigCode(event); break;
                     case "reset-tcc": config.onConfigResetTCC(event); break;
                 }
+            case "check-link": CheckLink.checkLink(event); break;
+            default: logger.warn("Unknown Command");
             }
 
         } catch (Exception e) {
