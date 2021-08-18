@@ -1,6 +1,5 @@
 package com.dynxsty.linkchecker;
 
-import com.dynxsty.linkchecker.check.LinkChecker;
 import com.dynxsty.linkchecker.listener.SlashCommand;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.JDA;
@@ -21,7 +20,7 @@ public class Bot {
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .enableCache(CacheFlag.ACTIVITY)
                 .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
-                .addEventListeners(new LinkChecker(), new SlashCommand())
+                .addEventListeners(new SlashCommand())
                 .build();
     }
 

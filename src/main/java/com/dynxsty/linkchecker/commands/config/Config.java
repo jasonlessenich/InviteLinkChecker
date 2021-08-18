@@ -43,31 +43,31 @@ public class Config {
         event.getHook().sendMessageEmbeds(e).setEphemeral(true).queue();
     }
 
-    public void onConfigToken (SlashCommandEvent event) throws Exception {
+    public void onConfigToken (SlashCommandEvent event)  {
 
         new ConfigString("token", "null").setValue(event.getOption("token").getAsString());
         event.getHook().sendMessageEmbeds(configEmbed("Token", event.getOption("token").getAsString())).setEphemeral(true).queue();
     }
 
-    public void onConfigTimeUnit (SlashCommandEvent event) throws Exception {
+    public void onConfigTimeUnit (SlashCommandEvent event) {
 
         new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).setValue(TimeUnit.valueOf(event.getOption("unit").getAsString().toUpperCase()));
         event.getHook().sendMessageEmbeds(configEmbed("Time Unit", event.getOption("unit").getAsString().toUpperCase())).setEphemeral(true).queue();
     }
 
-    public void onConfigInterval (SlashCommandEvent event) throws Exception {
+    public void onConfigInterval (SlashCommandEvent event) {
 
         new ConfigInt("interval", 5).setValue((int) event.getOption("int").getAsLong());
         event.getHook().sendMessageEmbeds(configEmbed("Interval", event.getOption("int").getAsString())).setEphemeral(true).queue();
     }
 
-    public void onConfigCode (SlashCommandEvent event) throws Exception {
+    public void onConfigCode (SlashCommandEvent event) {
 
         new ConfigString("code", "java").setValue(event.getOption("code").getAsString().toLowerCase());
         event.getHook().sendMessageEmbeds(configEmbed("Invite Code", event.getOption("code").getAsString().toLowerCase())).setEphemeral(true).queue();
     }
 
-    public void onConfigResetTCC (SlashCommandEvent event) throws Exception {
+    public void onConfigResetTCC (SlashCommandEvent event) {
 
         new ConfigInt("totalCheckCount", 0).setValue(0);
         event.getHook().sendMessageEmbeds(configEmbed("Total Check Count", "0")).setEphemeral(true).queue();

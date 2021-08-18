@@ -1,20 +1,21 @@
 package com.dynxsty.linkchecker.commands;
 
 import com.dynxsty.linkchecker.Constants;
-import com.dynxsty.linkchecker.listener.SlashCommand;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
 import java.util.Date;
 
 public class CheckLink {
 
-    public static void checkLink(SlashCommandEvent event) {
+    public void checkLink(SlashCommandEvent event) {
 
-        String code = new ConfigString("code", "java").getValue();
+        OptionMapping option = event.getOption("code");
+        String code = option == null ? new ConfigString("code", "java").getValue() : option.getAsString();
 
         try {
 
@@ -24,7 +25,6 @@ public class CheckLink {
                     .setColor(Constants.EMBED_GRAY)
                     .setThumbnail(invite.getGuild().getIconUrl())
                     .setTitle(invite.getGuild().getName())
-                    .setImage(invite.getGuild().getSplashUrl())
 
                     .addField("Name", "```" + invite.getGuild().getName() + "```", true)
                     .addField("ID", "```" + invite.getGuild().getId() + "```", true)
@@ -35,6 +35,8 @@ public class CheckLink {
             event.getHook().sendMessageEmbeds(embed).queue();
 
         } catch (ErrorResponseException e) {
+
+            if (!e.getMessage().equals("10006: Unknown Invite")) return;
 
             var embed = new EmbedBuilder()
                     .setColor(Constants.EMBED_GRAY)

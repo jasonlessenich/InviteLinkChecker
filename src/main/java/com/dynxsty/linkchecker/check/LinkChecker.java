@@ -5,9 +5,9 @@ import com.dynxsty.linkchecker.properties.ConfigInt;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import com.dynxsty.linkchecker.properties.ConfigTimeUnit;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Invite;
-import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class LinkChecker extends ListenerAdapter {
         new ConfigInt("totalCheckCount", 0).setValue(i + 1);
     }
 
-    void updatePresence(ReadyEvent event, AtomicInteger checkCount, int interval, String unit) {
+    void updatePresence(JDA jda, AtomicInteger checkCount, int interval, String unit) {
 
         RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
         long uptimeMS = rb.getUptime();
@@ -47,13 +47,12 @@ public class LinkChecker extends ListenerAdapter {
 
         incrementTotalCount();
 
-        event.getJDA().getPresence().setActivity(Activity.watching("discord.gg/" + new ConfigString("code", "java").getValue()
+        jda.getPresence().setActivity(Activity.watching("discord.gg/" + new ConfigString("code", "java").getValue()
                 + " every " + interval + " " + unit + " | Check #" + checkCount + " (" + new ConfigInt("totalCheckCount", 0).getValue() + " total)"
                 + " | " + uptimeDAYS + "d " + uptimeHRS + "h " + uptimeMIN + "min " + uptimeSEC + "s"));
     }
 
-    @Override
-    public void onReady(ReadyEvent event) {
+    public void startCheck(JDA jda) {
 
         AtomicInteger i = new AtomicInteger();
         int interval = new ConfigInt("interval", 5).getValue();
@@ -62,13 +61,13 @@ public class LinkChecker extends ListenerAdapter {
         threadPool.scheduleWithFixedDelay(() -> {
 
             i.getAndIncrement();
-            updatePresence(event, i, interval, timeUnit);
+            updatePresence(jda, i, interval, timeUnit);
 
             String code = new ConfigString("code", "java").getValue();
 
             try {
 
-                Invite invite = Invite.resolve(event.getJDA(), code).complete();
+                Invite invite = Invite.resolve(jda, code).complete();
                 logger.info("discord.gg/" +  code + " is taken (" + invite.getGuild().getName() + ", " + invite.getGuild().getId() + "). Next check in " + interval + " "
                         + timeUnit + ".");
 
@@ -83,17 +82,17 @@ public class LinkChecker extends ListenerAdapter {
 
                 var embed = new EmbedBuilder()
                         .setColor(Constants.EMBED_GRAY)
-                        .setThumbnail(event.getJDA().getSelfUser().getEffectiveAvatarUrl())
-                        .setAuthor(e.getClass().getSimpleName(), null, event.getJDA().getSelfUser().getEffectiveAvatarUrl())
+                        .setThumbnail(jda.getSelfUser().getEffectiveAvatarUrl())
+                        .setAuthor(e.getClass().getSimpleName(), null, jda.getSelfUser().getEffectiveAvatarUrl())
                         .setDescription("```" + e.getMessage() + "\n⋅ discord.gg/" +  code + " might be available!```")
                         .setTimestamp(new Date().toInstant())
                         .build();
 
-                event.getJDA().getGuildById(new ConfigString("guild_id", "null").getValue())
+                jda.getGuildById(new ConfigString("guild_id", "null").getValue())
                         .getTextChannelById(new ConfigString("text_id", "null").getValue())
                         .sendMessage(new ConfigString("link_available_msg", "null").getValue())
                         .setEmbeds(embed).queue();
             }
-        }, 0, new ConfigInt("interval", 5).getValue(), new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue());
+        }, 5, new ConfigInt("interval", 5).getValue(), new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue());
     }
 }

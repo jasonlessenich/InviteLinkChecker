@@ -2,15 +2,18 @@ package com.dynxsty.linkchecker.listener;
 
 import com.dynxsty.linkchecker.Bot;
 import com.dynxsty.linkchecker.Constants;
+import com.dynxsty.linkchecker.check.LinkChecker;
 import com.dynxsty.linkchecker.commands.CheckLink;
 import com.dynxsty.linkchecker.commands.config.Config;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
+import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +27,9 @@ public class SlashCommand extends ListenerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(SlashCommand.class);
 
-    @Override
-    public void onReady(ReadyEvent event) {
+    void registerSlashCommands(Guild guild) {
 
-        CommandListUpdateAction updateAction = event.getJDA().getGuildById(new ConfigString("guild_id", "null").getValue()).updateCommands();
+        CommandListUpdateAction updateAction = guild.updateCommands();
 
         updateAction.addCommands(
                 new CommandData("config", "the config")
@@ -38,40 +40,53 @@ public class SlashCommand extends ListenerAdapter {
                                 new SubcommandData("interval", "changes the interval (requires restart)").addOption(INTEGER, "int", "the new check-interval", true),
                                 new SubcommandData("invite-code", "changes the invite-code").addOption(STRING, "code", "the new invite code", true),
                                 new SubcommandData("reset-tcc", "resets the total check count")),
-                new CommandData("check-link", "manually check if the invite link is taken"));
+                new CommandData("check-link", "manually check if the invite link is taken").addOption(STRING, "code", "the invite code", false));
+
+        for (var cmd : guild.retrieveCommands().complete()) {
+
+            logger.info("[{}] Updating Privileges for Command {}", guild.getName(), cmd.getName());
+            if (cmd.getName().equals("check-link")) continue;
+
+            cmd.updatePrivileges(guild, CommandPrivilege.enableUser(
+                    new ConfigString("owner_id", "null").getValue()),
+                    CommandPrivilege.disableRole(guild.getId())).complete();
+        }
+
         updateAction.queue();
+    }
+
+    @Override
+    public void onReady(ReadyEvent event) {
+
+        for (var guild : event.getJDA().getGuilds()) registerSlashCommands(guild);
+        new LinkChecker().startCheck(event.getJDA());
     }
 
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
 
-        if (!event.getMember().getId().equals(new ConfigString("owner_id", "null").getValue())) {
-
-            logger.info(event.getUser().getAsTag() + " tried to use /" + event.getName() + " " + event.getSubcommandName());
-            event.reply("Only ``" + event.getGuild().getMemberById(new ConfigString("owner_id", "null").getValue()).getUser().getAsTag() + "`` can execute this command").setEphemeral(true).queue();
-            return;
-        }
-
         event.deferReply().setEphemeral(true).queue();
         Config config = new Config();
 
         try {
-
-            logger.info(event.getUser().getAsTag() + " used /" + event.getName() + " " + event.getSubcommandName());
+            if (event.getSubcommandName() == null) logger.info("{} used /{}", event.getUser().getAsTag(), event.getName());
+            else logger.info("{} used /{} {}", event.getUser().getAsTag(), event.getName(), event.getSubcommandName());
 
         switch (event.getName()) {
 
             case "config":
                 switch (event.getSubcommandName()) {
-                    case "list": config.onConfigList(event); break;
-                    case "token": config.onConfigToken(event); break;
-                    case "time-unit": config.onConfigTimeUnit(event); break;
-                    case "interval": config.onConfigInterval(event); break;
-                    case "invite-code": config.onConfigCode(event); break;
-                    case "reset-tcc": config.onConfigResetTCC(event); break;
+                    case "list" -> config.onConfigList(event);
+                    case "token" -> config.onConfigToken(event);
+                    case "time-unit" -> config.onConfigTimeUnit(event);
+                    case "interval" -> config.onConfigInterval(event);
+                    case "invite-code" -> config.onConfigCode(event);
+                    case "reset-tcc" -> config.onConfigResetTCC(event);
                 }
-            case "check-link": CheckLink.checkLink(event); break;
-            default: logger.warn("Unknown Command");
+            break;
+
+            case "check-link": new CheckLink().checkLink(event); break;
+            default: logger.error("Unknown Command! {} used /{}", event.getUser().getAsTag(), event.getName());
             }
 
         } catch (Exception e) {
