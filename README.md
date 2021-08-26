@@ -8,7 +8,7 @@ Simply run ``java -jar LinkChecker.jar`` in the Command Line
 [→ Java SE Development Kit 16 required](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html)
 
 # Configuration
-• To start up, the Bot only needs a ``config.properties`` File in the source directory  
+• To start up, the Bot only needs a ``config.properties`` File in the source directory   
 Sample ``config.properties`` File:
 ```
 #
