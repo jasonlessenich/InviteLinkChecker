@@ -16,7 +16,6 @@ public class Bot {
     public static void main(String[] args) throws Exception {
 
         jda = JDABuilder.createDefault(new ConfigString("token", "null").getValue())
-                .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .enableCache(CacheFlag.ACTIVITY)
                 .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))

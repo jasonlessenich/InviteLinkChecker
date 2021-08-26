@@ -66,7 +66,6 @@ public class SlashCommand extends ListenerAdapter {
     public void onSlashCommand(SlashCommandEvent event) {
 
         event.deferReply().setEphemeral(true).queue();
-        Config config = new Config();
 
         try {
             if (event.getSubcommandName() == null) logger.info("{} used /{}", event.getUser().getAsTag(), event.getName());
@@ -74,17 +73,7 @@ public class SlashCommand extends ListenerAdapter {
 
         switch (event.getName()) {
 
-            case "config":
-                switch (event.getSubcommandName()) {
-                    case "list" -> config.onConfigList(event);
-                    case "token" -> config.onConfigToken(event);
-                    case "time-unit" -> config.onConfigTimeUnit(event);
-                    case "interval" -> config.onConfigInterval(event);
-                    case "invite-code" -> config.onConfigCode(event);
-                    case "reset-tcc" -> config.onConfigResetTCC(event);
-                }
-            break;
-
+            case "config": new Config().execute(event); break;
             case "check-link": new CheckLink().checkLink(event); break;
             default: logger.error("Unknown Command! {} used /{}", event.getUser().getAsTag(), event.getName());
             }

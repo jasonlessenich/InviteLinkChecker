@@ -25,10 +25,8 @@ public class CheckLink {
                     .setColor(Constants.EMBED_GRAY)
                     .setThumbnail(invite.getGuild().getIconUrl())
                     .setTitle(invite.getGuild().getName())
-
                     .addField("Name", "```" + invite.getGuild().getName() + "```", true)
                     .addField("ID", "```" + invite.getGuild().getId() + "```", true)
-
                     .setTimestamp(new Date().toInstant())
                     .build();
 
