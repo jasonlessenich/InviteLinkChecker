@@ -91,7 +91,7 @@ public class LinkChecker extends ListenerAdapter {
 
                 jda.getGuildById(new ConfigString("guild_id").getValue())
                         .getTextChannelById(new ConfigString("text_id").getValue())
-                        .sendMessage(new ConfigString("link_available_msg").getValue())
+                        .sendMessage("<@" + new ConfigString("owner_id").getValue() + ">")
                         .setEmbeds(embed).queue();
             }
         }, 5, new ConfigInt("interval").getValue(), new ConfigTimeUnit("timeunit").getValue());
