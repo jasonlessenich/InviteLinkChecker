@@ -1,17 +1,15 @@
 # InviteLinkChecker
 
-A (dumb) discord bot, which checks if an (custom) invite link is taken or not - written in java using [JDA](https://github.com/DV8FromTheWorld/JDA/)\
-_(totally not made to let us know when the discord.gg/java vanity url is finally available)_
+A Discord Bot, that checks if an (custom) invite link is taken or not - written in Java using [JDA](https://github.com/DV8FromTheWorld/JDA/)
 
 # Usage
 
-Simply run ``java -jar LinkChecker.jar`` in the command line  
+Simply run ``java -jar LinkChecker.jar`` in the Command Line  
 [→ Java SE Development Kit 16 required](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html)
 
 # Configuration
-To start up, the bot only needs a ``config.properties`` file in the source directory
-
-sample ``config.properties`` file:
+• To start up, the Bot only needs a ``config.properties`` File in the source directory   
+Sample ``config.properties`` File:
 ```
 #
 #Thu Jul 08 23:43:24 CEST 2021
