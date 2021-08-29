@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class GetConfigEmbed implements ConfigCommandHandler {
     @Override

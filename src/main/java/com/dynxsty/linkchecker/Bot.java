@@ -5,12 +5,9 @@ import com.dynxsty.linkchecker.properties.ConfigInt;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-
-import java.util.Locale;
 
 public class Bot {
 
