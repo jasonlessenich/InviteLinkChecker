@@ -26,7 +26,7 @@ public class Bot {
     public void listConfig() {
 
         System.out.printf(
-                "\n     [*] Logged in as " + Constants.TEXT_CYAN + jda.getSelfUser().getAsTag() + Constants.TEXT_RESET +
+                "\n     [*] Logged in as " + Constants.TEXT_WHITE + jda.getSelfUser().getAsTag() + Constants.TEXT_RESET +
                 "\n     Token: " + new ConfigString("token").getValue() +
                 "\n     Owner: " +  jda.retrieveUserById(new ConfigString("owner_id").getValue()).complete().getAsTag() +
                 "\n     Invite Link: discord.gg/" + new ConfigString("code").getValue() +

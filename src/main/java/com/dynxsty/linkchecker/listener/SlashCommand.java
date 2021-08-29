@@ -44,7 +44,8 @@ public class SlashCommand extends ListenerAdapter {
 
         for (var cmd : guild.retrieveCommands().complete()) {
 
-            logger.info("[{}] Updating Privileges for Command {}", guild.getName(), cmd.getName());
+            logger.info("{}[{}]{} Updating Privileges for Command {}",
+                    Constants.TEXT_WHITE, guild.getName(), Constants.TEXT_RESET, cmd.getName());
             if (cmd.getName().equals("check-link")) continue;
 
             cmd.updatePrivileges(guild, CommandPrivilege.enableUser(
