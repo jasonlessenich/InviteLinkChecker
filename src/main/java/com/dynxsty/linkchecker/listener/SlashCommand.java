@@ -48,7 +48,7 @@ public class SlashCommand extends ListenerAdapter {
             if (cmd.getName().equals("check-link")) continue;
 
             cmd.updatePrivileges(guild, CommandPrivilege.enableUser(
-                    new ConfigString("owner_id", "null").getValue()),
+                    new ConfigString("owner_id").getValue()),
                     CommandPrivilege.disableRole(guild.getId())).complete();
         }
 
@@ -58,6 +58,7 @@ public class SlashCommand extends ListenerAdapter {
     @Override
     public void onReady(ReadyEvent event) {
 
+        new Bot().listConfig();
         for (var guild : event.getJDA().getGuilds()) registerSlashCommands(guild);
         new LinkChecker().startCheck(event.getJDA());
     }
@@ -74,7 +75,7 @@ public class SlashCommand extends ListenerAdapter {
         switch (event.getName()) {
 
             case "config": new Config().execute(event); break;
-            case "check-link": new CheckLink().checkLink(event); break;
+            case "check-link": new CheckLink().onCheckLink(event); break;
             default: logger.error("Unknown Command! {} used /{}", event.getUser().getAsTag(), event.getName());
             }
 

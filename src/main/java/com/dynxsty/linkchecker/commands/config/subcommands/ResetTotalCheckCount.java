@@ -9,7 +9,7 @@ public class ResetTotalCheckCount implements ConfigCommandHandler {
     @Override
     public void execute(SlashCommandEvent event) {
 
-        new ConfigInt("totalCheckCount", 0).setValue(0);
+        new ConfigInt("totalCheckCount").setValue(0);
         event.getHook().sendMessageEmbeds(new Config().configEmbed(
                 "Total Check Count",
                 "0"

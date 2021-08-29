@@ -9,7 +9,7 @@ public class SetConfigCode implements ConfigCommandHandler {
     @Override
     public void execute(SlashCommandEvent event) {
 
-        new ConfigString("code", "java").setValue(event.getOption("code").getAsString().toLowerCase());
+        new ConfigString("code").setValue(event.getOption("code").getAsString().toLowerCase());
         event.getHook().sendMessageEmbeds(new Config().configEmbed(
                 "Invite Code",
                 event.getOption("code").getAsString().toLowerCase()

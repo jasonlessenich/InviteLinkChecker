@@ -3,7 +3,7 @@ package com.dynxsty.linkchecker.properties;
 public class ConfigInt extends ConfigElement {
     private int value;
 
-    public ConfigInt(String entryname, int defaultvalue) {
+    public ConfigInt(String entryname) {
         super(entryname);
         if(this.isRegisteredInConfig()){
             try{
@@ -14,7 +14,7 @@ public class ConfigInt extends ConfigElement {
             }
         }else{
             try{
-                this.save(String.valueOf(defaultvalue));
+                this.save(String.valueOf(0));
             }catch (Exception e){
                 System.out.println("Failed whilst saving: " + entryname);
                 e.printStackTrace();

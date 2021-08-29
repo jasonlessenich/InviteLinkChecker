@@ -9,7 +9,7 @@ public class SetConfigInterval implements ConfigCommandHandler {
     @Override
     public void execute(SlashCommandEvent event) {
 
-        new ConfigInt("interval", 5).setValue((int) event.getOption("int").getAsLong());
+        new ConfigInt("interval").setValue((int) event.getOption("int").getAsLong());
         event.getHook().sendMessageEmbeds(new Config().configEmbed(
                 "Interval",
                 event.getOption("int").getAsString()

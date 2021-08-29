@@ -19,12 +19,12 @@ public class GetConfigEmbed implements ConfigCommandHandler {
         var e = new EmbedBuilder()
                 .setColor(Constants.EMBED_GRAY)
                 .setAuthor("Bot Configuration", null, Bot.jda.getSelfUser().getEffectiveAvatarUrl())
-                .addField("Interval", "```" + new ConfigInt("interval", 5).getValue() + " "
+                .addField("Interval", "```" + new ConfigInt("interval").getValue() + " "
                         + new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue().name().toLowerCase() + "```", true)
 
-                .addField("Invite Code", "```discord.gg/" + new ConfigString("code", "java").getValue() + "```", true)
-                .addField("Total Check Count", "```" + new ConfigInt("totalCheckCount", 0).getValue() + "```", true)
-                .addField("Token", "```" + new ConfigString("token", "null").getValue() + "```", false)
+                .addField("Invite Code", "```discord.gg/" + new ConfigString("code").getValue() + "```", true)
+                .addField("Total Check Count", "```" + new ConfigInt("totalCheckCount").getValue() + "```", true)
+                .addField("Token", "```" + new ConfigString("token").getValue() + "```", false)
                 .setTimestamp(new Date().toInstant())
                 .build();
 

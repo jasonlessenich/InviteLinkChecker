@@ -12,10 +12,10 @@ import java.util.Date;
 
 public class CheckLink {
 
-    public void checkLink(SlashCommandEvent event) {
+    public void onCheckLink(SlashCommandEvent event) {
 
         OptionMapping option = event.getOption("code");
-        String code = option == null ? new ConfigString("code", "java").getValue() : option.getAsString();
+        String code = option == null ? new ConfigString("code").getValue() : option.getAsString();
 
         try {
 

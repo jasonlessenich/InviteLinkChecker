@@ -9,7 +9,7 @@ public class SetConfigToken implements ConfigCommandHandler {
     @Override
     public void execute(SlashCommandEvent event) {
 
-        new ConfigString("token", "null").setValue(event.getOption("token").getAsString());
+        new ConfigString("token").setValue(event.getOption("token").getAsString());
         event.getHook().sendMessageEmbeds(new Config().configEmbed(
                 "Token",
                 event.getOption("token").getAsString()

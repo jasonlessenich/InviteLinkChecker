@@ -28,8 +28,8 @@ public class LinkChecker extends ListenerAdapter {
 
     void incrementTotalCount() {
 
-        int i = new ConfigInt("totalCheckCount", 0).getValue();
-        new ConfigInt("totalCheckCount", 0).setValue(i + 1);
+        int i = new ConfigInt("totalCheckCount").getValue();
+        new ConfigInt("totalCheckCount").setValue(i + 1);
     }
 
     void updatePresence(JDA jda, AtomicInteger checkCount, int interval, String unit) {
@@ -47,15 +47,15 @@ public class LinkChecker extends ListenerAdapter {
 
         incrementTotalCount();
 
-        jda.getPresence().setActivity(Activity.watching("discord.gg/" + new ConfigString("code", "java").getValue()
-                + " every " + interval + " " + unit + " | Check #" + checkCount + " (" + new ConfigInt("totalCheckCount", 0).getValue() + " total)"
+        jda.getPresence().setActivity(Activity.watching("discord.gg/" + new ConfigString("code").getValue()
+                + " every " + interval + " " + unit + " | Check #" + checkCount + " (" + new ConfigInt("totalCheckCount").getValue() + " total)"
                 + " | " + uptimeDAYS + "d " + uptimeHRS + "h " + uptimeMIN + "min " + uptimeSEC + "s"));
     }
 
     public void startCheck(JDA jda) {
 
         AtomicInteger i = new AtomicInteger();
-        int interval = new ConfigInt("interval", 5).getValue();
+        int interval = new ConfigInt("interval").getValue();
         String timeUnit = new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue().name().toLowerCase();
 
         threadPool.scheduleWithFixedDelay(() -> {
@@ -63,7 +63,7 @@ public class LinkChecker extends ListenerAdapter {
             i.getAndIncrement();
             updatePresence(jda, i, interval, timeUnit);
 
-            String code = new ConfigString("code", "java").getValue();
+            String code = new ConfigString("code").getValue();
 
             try {
 
@@ -88,11 +88,11 @@ public class LinkChecker extends ListenerAdapter {
                         .setTimestamp(new Date().toInstant())
                         .build();
 
-                jda.getGuildById(new ConfigString("guild_id", "null").getValue())
-                        .getTextChannelById(new ConfigString("text_id", "null").getValue())
-                        .sendMessage(new ConfigString("link_available_msg", "null").getValue())
+                jda.getGuildById(new ConfigString("guild_id").getValue())
+                        .getTextChannelById(new ConfigString("text_id").getValue())
+                        .sendMessage(new ConfigString("link_available_msg").getValue())
                         .setEmbeds(embed).queue();
             }
-        }, 5, new ConfigInt("interval", 5).getValue(), new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue());
+        }, 5, new ConfigInt("interval").getValue(), new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue());
     }
 }
