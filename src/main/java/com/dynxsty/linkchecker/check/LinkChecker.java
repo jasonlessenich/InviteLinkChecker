@@ -68,8 +68,9 @@ public class LinkChecker extends ListenerAdapter {
             try {
 
                 Invite invite = Invite.resolve(jda, code).complete();
-                logger.info("[Check #{}] discord.gg/{} is taken ({}, {})",
-                        i, code, invite.getGuild().getName(), invite.getGuild().getId());
+                logger.info("[{}/{}] discord.gg/{} is taken ({}, {})",
+                        i, new ConfigInt("totalCheckCount").getValue(), code,
+                        invite.getGuild().getName(), invite.getGuild().getId());
 
             } catch (ErrorResponseException e) {
 

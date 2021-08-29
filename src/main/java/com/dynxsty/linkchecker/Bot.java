@@ -32,7 +32,7 @@ public class Bot {
                 "\n     Invite Link: discord.gg/" + new ConfigString("code").getValue() +
                 "\n     Interval: %s %s (%d checks total)" +
                 "\n\n",
-                new ConfigString("interval").getValue(), new ConfigString("timeunit").getValue().toLowerCase(),
+                new ConfigString("interval").getValue(), new ConfigString("timeunit").getValue(),
                 new ConfigInt("totalCheckCount").getValue()
         );
     }

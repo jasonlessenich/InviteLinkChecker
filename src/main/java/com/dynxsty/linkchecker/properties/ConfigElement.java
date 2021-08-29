@@ -24,7 +24,9 @@ public class ConfigElement {
 
     public void save(String value) throws IOException {
         Properties prop = new Properties();
-        prop.load(new BufferedInputStream(new FileInputStream(Constants.CONFIG_PATH)));
+        try {
+            prop.load(new BufferedInputStream(new FileInputStream(Constants.CONFIG_PATH)));
+        } catch (FileNotFoundException e) { init(); save(value); }
         prop.setProperty(entryname,value);
         prop.store(new FileOutputStream(Constants.CONFIG_PATH),"");
     }
