@@ -20,7 +20,7 @@ public class GetConfigEmbed implements ConfigCommandHandler {
                 .setColor(Constants.EMBED_GRAY)
                 .setAuthor("Bot Configuration", null, Bot.jda.getSelfUser().getEffectiveAvatarUrl())
                 .addField("Interval", "```" + new ConfigInt("interval").getValue() + " "
-                        + new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue().name().toLowerCase() + "```", true)
+                        + new ConfigTimeUnit("timeunit").getValue().name().toLowerCase() + "```", true)
 
                 .addField("Invite Code", "```discord.gg/" + new ConfigString("code").getValue() + "```", true)
                 .addField("Total Check Count", "```" + new ConfigInt("totalCheckCount").getValue() + "```", true)

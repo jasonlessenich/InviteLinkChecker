@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -56,7 +57,7 @@ public class LinkChecker extends ListenerAdapter {
 
         AtomicInteger i = new AtomicInteger();
         int interval = new ConfigInt("interval").getValue();
-        String timeUnit = new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue().name().toLowerCase();
+        String timeUnit = new ConfigTimeUnit("timeunit").getValue().name().toLowerCase();
 
         threadPool.scheduleWithFixedDelay(() -> {
 
@@ -68,8 +69,8 @@ public class LinkChecker extends ListenerAdapter {
             try {
 
                 Invite invite = Invite.resolve(jda, code).complete();
-                logger.info("discord.gg/" +  code + " is taken (" + invite.getGuild().getName() + ", " + invite.getGuild().getId() + "). Next check in " + interval + " "
-                        + timeUnit + ".");
+                logger.info("[Check #{}] discord.gg/{} is taken ({}, {})",
+                        i, code, invite.getGuild().getName(), invite.getGuild().getId());
 
             } catch (ErrorResponseException e) {
 
@@ -78,7 +79,7 @@ public class LinkChecker extends ListenerAdapter {
                     return;
                 }
 
-                logger.warn(e.getClass().getSimpleName() + ": \"" + e.getMessage() + "\": discord.gg/" +  code + " might be available!");
+                logger.warn(e.getClass().getSimpleName() + ": \"" + e.getMessage() + "\": discord.gg/{} might be available!", code);
 
                 var embed = new EmbedBuilder()
                         .setColor(Constants.EMBED_GRAY)
@@ -93,6 +94,6 @@ public class LinkChecker extends ListenerAdapter {
                         .sendMessage(new ConfigString("link_available_msg").getValue())
                         .setEmbeds(embed).queue();
             }
-        }, 5, new ConfigInt("interval").getValue(), new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).getValue());
+        }, 5, new ConfigInt("interval").getValue(), new ConfigTimeUnit("timeunit").getValue());
     }
 }

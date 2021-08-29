@@ -11,7 +11,7 @@ public class SetConfigTimeUnit implements ConfigCommandHandler {
     @Override
     public void execute(SlashCommandEvent event) {
 
-        new ConfigTimeUnit("timeunit", TimeUnit.MINUTES).setValue(TimeUnit.valueOf(event.getOption("unit").getAsString().toUpperCase()));
+        new ConfigTimeUnit("timeunit").setValue(TimeUnit.valueOf(event.getOption("unit").getAsString().toUpperCase()));
         event.getHook().sendMessageEmbeds(new Config().configEmbed(
                 "Time Unit",
                 event.getOption("unit").getAsString().toUpperCase()

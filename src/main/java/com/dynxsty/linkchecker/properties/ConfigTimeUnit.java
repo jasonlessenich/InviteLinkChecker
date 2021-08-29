@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 public class ConfigTimeUnit extends ConfigElement {
     private String value;
 
-    public ConfigTimeUnit(String entryname, TimeUnit defaultvalue) {
+    public ConfigTimeUnit(String entryname) {
         super(entryname);
         if(this.isRegisteredInConfig()){
             try{
@@ -16,7 +16,7 @@ public class ConfigTimeUnit extends ConfigElement {
             }
         }else{
             try{
-                this.save(String.valueOf(defaultvalue));
+                this.save(String.valueOf(TimeUnit.MINUTES));
             }catch (Exception e){
                 System.out.println("Failed whilst saving: " + entryname);
                 e.printStackTrace();
