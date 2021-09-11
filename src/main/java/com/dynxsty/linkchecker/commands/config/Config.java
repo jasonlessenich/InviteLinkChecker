@@ -3,34 +3,27 @@ package com.dynxsty.linkchecker.commands.config;
 import com.dynxsty.linkchecker.Bot;
 import com.dynxsty.linkchecker.Constants;
 import com.dynxsty.linkchecker.commands.config.subcommands.*;
+import com.dynxsty.linkchecker.commands.dao.GuildSlashCommand;
+import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-public class Config implements ConfigCommandHandler {
+public class Config extends GuildSlashCommand {
 
-    private final Map<String, ConfigCommandHandler> configIndex;
+    public Config(Guild guild) {
 
-    public Config() {
+        this.commandData = new CommandData("config", "the config");
+        this.subCommandClasses = new Class[]{GetConfigEmbed.class, ResetTotalCheckCount.class, SetConfigCode.class,
+                SetConfigInterval.class, SetConfigTimeUnit.class, SetConfigToken.class};
 
-        this.configIndex = new HashMap<>();
-
-        configIndex.put("list", new GetConfigEmbed());
-        configIndex.put("reset-tcc", new ResetTotalCheckCount());
-        configIndex.put("invite-code", new SetConfigCode());
-        configIndex.put("interval", new SetConfigInterval());
-        configIndex.put("time-unit", new SetConfigTimeUnit());
-        configIndex.put("token", new SetConfigToken());
-    }
-
-    @Override
-    public void execute(SlashCommandEvent event) {
-        var command = configIndex.get(event.getSubcommandName());
-        if (command != null) command.execute(event);
+        this.commandPrivileges = new CommandPrivilege[]{
+                CommandPrivilege.enableUser(new ConfigString("owner_id").getValue()),
+                CommandPrivilege.disableRole(guild.getId())};
     }
 
     public MessageEmbed configEmbed (String configName, String newValue) {

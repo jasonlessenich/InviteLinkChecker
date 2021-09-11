@@ -1,0 +1,12 @@
+package com.dynxsty.linkchecker.commands.dao;
+
+import lombok.RequiredArgsConstructor;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
+
+@RequiredArgsConstructor
+public abstract class GuildSlashSubCommand {
+
+    protected SubcommandData subcommandData = null;
+
+    public SubcommandData getSubCommandData () { return this.subcommandData; }
+}

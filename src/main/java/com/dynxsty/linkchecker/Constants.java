@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class Constants {
 
+    public static final String COMMANDS_PACKAGE = "com.dynxsty.linkchecker.commands";
+
     public static final String TEXT_RESET = "\u001B[0m";
     public static final String TEXT_WHITE = "\u001B[37m";
 

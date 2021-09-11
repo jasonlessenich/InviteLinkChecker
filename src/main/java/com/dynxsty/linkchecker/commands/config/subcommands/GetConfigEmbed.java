@@ -2,18 +2,26 @@ package com.dynxsty.linkchecker.commands.config.subcommands;
 
 import com.dynxsty.linkchecker.Bot;
 import com.dynxsty.linkchecker.Constants;
-import com.dynxsty.linkchecker.commands.config.ConfigCommandHandler;
+import com.dynxsty.linkchecker.commands.SlashCommandHandler;
+import com.dynxsty.linkchecker.commands.dao.GuildSlashSubCommand;
 import com.dynxsty.linkchecker.properties.ConfigInt;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import com.dynxsty.linkchecker.properties.ConfigTimeUnit;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
+import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
 
 import java.util.Date;
 
-public class GetConfigEmbed implements ConfigCommandHandler {
+public class GetConfigEmbed extends GuildSlashSubCommand implements SlashCommandHandler {
+
+    public GetConfigEmbed () {
+        this.subcommandData = new SubcommandData("list", "shows the current bot configuration");
+    }
+
     @Override
-    public void execute(SlashCommandEvent event) {
+    public ReplyAction execute(SlashCommandEvent event) {
 
         var e = new EmbedBuilder()
                 .setColor(Constants.EMBED_GRAY)
@@ -27,6 +35,6 @@ public class GetConfigEmbed implements ConfigCommandHandler {
                 .setTimestamp(new Date().toInstant())
                 .build();
 
-        event.getHook().sendMessageEmbeds(e).setEphemeral(true).queue();
+        return event.replyEmbeds(e).setEphemeral(true);
     }
 }

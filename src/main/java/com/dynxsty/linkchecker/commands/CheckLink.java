@@ -1,18 +1,21 @@
 package com.dynxsty.linkchecker.commands;
 
 import com.dynxsty.linkchecker.Constants;
+import com.dynxsty.linkchecker.commands.dao.GuildSlashCommand;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
 
 import java.util.Date;
 
-public class CheckLink {
+public class CheckLink extends GuildSlashCommand implements SlashCommandHandler {
 
-    public void onCheckLink(SlashCommandEvent event) {
+    @Override
+    public ReplyAction execute(SlashCommandEvent event) {
 
         OptionMapping option = event.getOption("code");
         String code = option == null ? new ConfigString("code").getValue() : option.getAsString();
@@ -30,11 +33,11 @@ public class CheckLink {
                     .setTimestamp(new Date().toInstant())
                     .build();
 
-            event.getHook().sendMessageEmbeds(embed).queue();
+            return event.replyEmbeds(embed);
 
         } catch (ErrorResponseException e) {
 
-            if (!e.getMessage().equals("10006: Unknown Invite")) return;
+            if (!e.getMessage().equals("10006: Unknown Invite")) return null;
 
             var embed = new EmbedBuilder()
                     .setColor(Constants.EMBED_GRAY)
@@ -44,7 +47,7 @@ public class CheckLink {
                     .setTimestamp(new Date().toInstant())
                     .build();
 
-            event.getHook().sendMessageEmbeds(embed).queue();
+            return event.replyEmbeds(embed);
         }
     }
 }
