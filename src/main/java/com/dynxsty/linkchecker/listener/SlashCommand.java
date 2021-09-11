@@ -30,8 +30,8 @@ public class SlashCommand extends ListenerAdapter {
 
     void registerSlashCommands(@NotNull Guild guild) {
 
-        slashCommands = new HashMap<>();
-        slashPrivileges = new HashMap<>();
+        this.slashCommands = new HashMap<>();
+        this.slashPrivileges = new HashMap<>();
 
         CommandListUpdateAction updateAction = guild.updateCommands();
 
@@ -69,8 +69,10 @@ public class SlashCommand extends ListenerAdapter {
                     updateAction.addCommands(cmdData);
                 }
                 else {
-                    updateAction.addCommands(instance.getCommandData());
-                    slashCommands.put(instance.getCommandData().getName() + " " + null, (SlashCommandHandler) instance);
+                    if (instance.getCommandData() != null) {
+                        updateAction.addCommands(instance.getCommandData());
+                        slashCommands.put(instance.getCommandData().getName() + " " + null, (SlashCommandHandler) instance);
+                    } else logger.warn("Class {} is missing CommandData. It will be ignored.", clazz.getName());
                 }
             } catch (Exception e) { e.printStackTrace(); }
         }
@@ -102,6 +104,8 @@ public class SlashCommand extends ListenerAdapter {
             registerSlashCommands(guild);
             updatePrivileges(guild);
         }
+        logger.info("[*] Command update completed\n");
+
         new LinkChecker().startCheck(event.getJDA());
     }
 

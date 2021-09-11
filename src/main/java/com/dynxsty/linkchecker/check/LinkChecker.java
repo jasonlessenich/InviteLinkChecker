@@ -58,9 +58,6 @@ public class LinkChecker extends ListenerAdapter {
         int interval = new ConfigInt("interval").getValue();
         String timeUnit = new ConfigTimeUnit("timeunit").getValue().name().toLowerCase();
 
-        logger.info("Starting Checking for Invite Link discord.gg/{} \n",
-                new ConfigString("code").getValue());
-
         threadPool.scheduleWithFixedDelay(() -> {
 
             i.getAndIncrement();
