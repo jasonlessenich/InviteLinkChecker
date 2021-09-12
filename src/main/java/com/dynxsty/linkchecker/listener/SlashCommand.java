@@ -37,11 +37,16 @@ public class SlashCommand extends ListenerAdapter {
 
         Reflections cmds = new Reflections(Constants.COMMANDS_PACKAGE);
         Set<Class<? extends GuildSlashCommand>> classes = cmds.getSubTypesOf(GuildSlashCommand.class);
+        int cmdCount = 0;
+        int subCount = 0;
 
         for (var clazz : classes) {
+
+            cmdCount++;
             try {
-                logger.info("{}[{}]{} Adding CommandData from Class {}",
-                        Constants.TEXT_WHITE, guild.getName(), Constants.TEXT_RESET, clazz.getSimpleName());
+                logger.info("{}[{}] {}/{}{} Adding CommandData from Class {}",
+                        Constants.TEXT_WHITE, guild.getName(), cmdCount,
+                        classes.stream().count(), Constants.TEXT_RESET, clazz.getSimpleName());
 
                 GuildSlashCommand instance;
                 try { instance = clazz.getDeclaredConstructor(Guild.class).newInstance(guild);
@@ -55,8 +60,10 @@ public class SlashCommand extends ListenerAdapter {
                 if (instance.getSubCommandClasses() != null) {
                     var cmdData = instance.getCommandData();
                     for (var subClazz : instance.getSubCommandClasses()) {
-                        logger.info("\t{}[{}]{} Adding SubCommandData from Class {}",
-                                Constants.TEXT_WHITE, clazz.getSimpleName(), Constants.TEXT_RESET, subClazz.getSimpleName());
+                        subCount++;
+                        logger.info("\t{}[{}] {}/{}{} Adding SubCommandData from Class {}",
+                                Constants.TEXT_WHITE, clazz.getSimpleName(), subCount, instance.getSubCommandClasses().length,
+                                Constants.TEXT_RESET, subClazz.getSimpleName());
 
                         Class<GuildSlashSubCommand> subClass = subClazz.asSubclass(GuildSlashSubCommand.class);
                         var subInstance = subClass.getDeclaredConstructor().newInstance();
@@ -83,11 +90,13 @@ public class SlashCommand extends ListenerAdapter {
     }
 
     void updatePrivileges (@NotNull Guild guild) {
+        int i = 0;
         for (var cmd : guild.retrieveCommands().complete()) {
 
             if (slashPrivileges.containsKey(cmd.getName())) {
-                logger.info("{}[{}]{} Updating Privileges for Command {}",
-                        Constants.TEXT_WHITE, guild.getName(), Constants.TEXT_RESET, cmd.getName());
+                i++;
+                logger.info("{}[{}] {}/{}{} Updating Privileges for Command {}",
+                        Constants.TEXT_WHITE, guild.getName(), i, slashPrivileges.size(), Constants.TEXT_RESET, cmd.getName());
 
                 cmd.updatePrivileges(guild, slashPrivileges.get(cmd.getName())).complete();
             }
