@@ -47,22 +47,23 @@ public class SlashCommand extends ListenerAdapter {
             CommandData cmdData = null;
 
             try {
-                logger.info("{}[{}]{} Adding CommandData from Class {}",
-                        Constants.TEXT_WHITE, guild.getName(),
-                        Constants.TEXT_RESET, clazz.getSimpleName());
                 GuildSlashCommand instance;
                 try { instance = clazz.getDeclaredConstructor(Guild.class).newInstance(guild);
                 } catch (NoSuchMethodException nsm) { instance = clazz.getConstructor().newInstance(); }
 
-                if (instance.getCommandPrivileges() != null) {
-                    slashPrivileges.put(instance.getCommandData().getName(),
-                            instance.getCommandPrivileges());
-                }
                 if (instance.getCommandData() == null) {
                     logger.warn("Class {} is missing CommandData. It will be ignored.", clazz.getName());
                     continue;
                 }
+                if (instance.getCommandPrivileges() != null) {
+                    slashPrivileges.put(instance.getCommandData().getName(),
+                            instance.getCommandPrivileges());
+                }
                 cmdData = instance.getCommandData();
+                logger.info("{}[{}]{} Added CommandData from Class {}",
+                        Constants.TEXT_WHITE, guild.getName(),
+                        Constants.TEXT_RESET, clazz.getSimpleName());
+
                 if (instance.getSubCommandClasses() == null
                     && instance.getSubCommandGroupClasses() == null) {
                     slashCommands.put(instance.getCommandData().getName() + " " +
@@ -73,47 +74,52 @@ public class SlashCommand extends ListenerAdapter {
                     for (var subGroupClazz : instance.getSubCommandGroupClasses()) {
                         GuildSlashSubCommandGroup subGroupInstance = (GuildSlashSubCommandGroup) subGroupClazz.getDeclaredConstructor().newInstance();
                         if (subGroupInstance.getSubCommandGroupData() == null) {
-                            logger.warn("Class {} is missing SubCommandGroupData. It will be ignored.", clazz.getName());
-                        } else {
-                            logger.info("\t{}[{}]{} Adding SubCommandGroupData from Class {}",
-                                    Constants.TEXT_WHITE, clazz.getSimpleName(),
-                                    Constants.TEXT_RESET, subGroupClazz.getSimpleName());
+                            logger.warn("Class {} is missing SubCommandGroupData. It will be ignored.", subGroupClazz.getName());
+                            continue;
+                        }
+                        logger.info("\t{}[{}]{} Adding SubCommandGroupData from Class {}",
+                                Constants.TEXT_WHITE, clazz.getSimpleName(),
+                                Constants.TEXT_RESET, subGroupClazz.getSimpleName());
 
-                            if (subGroupInstance.getSubCommandClasses() != null) {
-                                for (var subClazz : subGroupInstance.getSubCommandClasses()) {
-                                    GuildSlashSubCommand subInstance = (GuildSlashSubCommand) subClazz.getDeclaredConstructor().newInstance();
-                                    if (subInstance.getSubCommandData() == null) {
-                                        logger.warn("Class {} is missing SubCommandData. It will be ignored.", clazz.getName());
-                                    } else {
-                                        logger.info("\t\t{}[{}]{} Adding SubCommandData from Class {}",
-                                                Constants.TEXT_WHITE, clazz.getSimpleName(), Constants.TEXT_RESET,
-                                                subClazz.getSimpleName());
-                                        cmdData.addSubcommandGroups(subGroupInstance.getSubCommandGroupData()
-                                                .addSubcommands(subInstance.getSubCommandData()));
-
-                                        slashCommands.put(instance.getCommandData().getName() + " " +
-                                                subGroupInstance.getSubCommandGroupData().getName() + " " +
-                                                subInstance.getSubCommandData().getName(), (SlashCommandHandler) subInstance);
-                                    }
-                                }
+                        if (subGroupInstance.getSubCommandClasses() == null) {
+                            logger.warn("Class {} is missing SubCommandClasses. It will be ignored.", subGroupClazz.getName());
+                            continue;
+                        }
+                        for (var subClazz : subGroupInstance.getSubCommandClasses()) {
+                            GuildSlashSubCommand subInstance = (GuildSlashSubCommand) subClazz.getDeclaredConstructor().newInstance();
+                            if (subInstance.getSubCommandData() == null) {
+                                logger.warn("Class {} is missing SubCommandData. It will be ignored.", subClazz.getName());
+                                continue;
                             }
+                            cmdData.addSubcommandGroups(subGroupInstance.getSubCommandGroupData()
+                                    .addSubcommands(subInstance.getSubCommandData()));
+
+                            slashCommands.put(instance.getCommandData().getName() + " " +
+                                    subGroupInstance.getSubCommandGroupData().getName() + " " +
+                                    subInstance.getSubCommandData().getName(), (SlashCommandHandler) subInstance);
+
+                            logger.info("\t\t{}[{}]{} Added SubCommandData from Class {}",
+                                    Constants.TEXT_WHITE, subGroupClazz.getSimpleName(), Constants.TEXT_RESET,
+                                    subClazz.getSimpleName());
                         }
                     }
                 }
+
                 if (instance.getSubCommandClasses() != null) {
                     for (var subClazz : instance.getSubCommandClasses()) {
                         GuildSlashSubCommand subInstance = (GuildSlashSubCommand) subClazz.getDeclaredConstructor().newInstance();
                         if (subInstance.getSubCommandData() == null) {
-                            logger.warn("Class {} is missing SubCommandData. It will be ignored.", clazz.getName());
+                            logger.warn("Class {} is missing SubCommandData. It will be ignored.", subClazz.getName());
                         } else {
-                            logger.info("\t{}[{}]{} Adding SubCommandData from Class {}",
-                                    Constants.TEXT_WHITE, clazz.getSimpleName(),
-                                    Constants.TEXT_RESET, subClazz.getSimpleName());
                             cmdData.addSubcommands(subInstance.getSubCommandData());
 
                             slashCommands.put(instance.getCommandData().getName() + " " +
                                     null + " " + subInstance.getSubCommandData().getName(),
                                     (SlashCommandHandler) subInstance);
+
+                            logger.info("\t{}[{}]{} Added SubCommandData from Class {}",
+                                    Constants.TEXT_WHITE, clazz.getSimpleName(),
+                                    Constants.TEXT_RESET, subClazz.getSimpleName());
                         }
                     }
                 }
@@ -126,18 +132,14 @@ public class SlashCommand extends ListenerAdapter {
     }
 
     void updatePrivileges (@NotNull Guild guild) {
-        int i = 0;
         for (var cmd : guild.retrieveCommands().complete()) {
-
             if (slashPrivileges.containsKey(cmd.getName())) {
-                i++;
-                logger.info("{}[{}] {} Updating Privileges for Command {}",
-                        Constants.TEXT_WHITE, guild.getName(), Constants.TEXT_RESET, cmd.getName());
-
                 cmd.updatePrivileges(guild, slashPrivileges.get(cmd.getName())).complete();
+                logger.info("{}[{}]{} Updated Privileges for Command {}",
+                        Constants.TEXT_WHITE, guild.getName(), Constants.TEXT_RESET, cmd.getName());
             }
         }
-        logger.info("{}[{}]{} Successfully updated Privileges",
+        if (!slashPrivileges.isEmpty()) logger.info("{}[{}]{} Successfully updated Privileges",
                 Constants.TEXT_WHITE, guild.getName(), Constants.TEXT_RESET);
     }
 

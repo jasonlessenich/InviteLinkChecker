@@ -15,17 +15,13 @@ public class ConfigElement {
     }
 
     public static void init() {
-        try {
-            new File(Constants.CONFIG_PATH).createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        try { new File(Constants.CONFIG_PATH).createNewFile();
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public void save(String value) throws IOException {
         Properties prop = new Properties();
-        try {
-            prop.load(new BufferedInputStream(new FileInputStream(Constants.CONFIG_PATH)));
+        try { prop.load(new BufferedInputStream(new FileInputStream(Constants.CONFIG_PATH)));
         } catch (FileNotFoundException e) { init(); save(value); }
         prop.setProperty(entryname,value);
         prop.store(new FileOutputStream(Constants.CONFIG_PATH),"");

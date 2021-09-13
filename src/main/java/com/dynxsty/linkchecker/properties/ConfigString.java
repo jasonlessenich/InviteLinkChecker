@@ -19,7 +19,6 @@ public class ConfigString extends ConfigElement {
                 System.out.println("Failed whilst saving: " + entryname);
                 e.printStackTrace();
             }
-
         }
     }
 
