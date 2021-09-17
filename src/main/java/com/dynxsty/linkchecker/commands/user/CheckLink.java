@@ -1,6 +1,7 @@
-package com.dynxsty.linkchecker.commands;
+package com.dynxsty.linkchecker.commands.user;
 
 import com.dynxsty.linkchecker.Constants;
+import com.dynxsty.linkchecker.commands.SlashCommandHandler;
 import com.dynxsty.linkchecker.commands.dao.GuildSlashCommand;
 import com.dynxsty.linkchecker.properties.ConfigString;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -24,12 +25,10 @@ public class CheckLink extends GuildSlashCommand implements SlashCommandHandler 
 
     @Override
     public ReplyAction execute(SlashCommandEvent event) {
-
         OptionMapping option = event.getOption("code");
         String code = option == null ? new ConfigString("code").getValue() : option.getAsString();
 
         try {
-
             Invite invite = Invite.resolve(event.getJDA(), code).complete();
 
             var embed = new EmbedBuilder()

@@ -5,7 +5,6 @@ import com.dynxsty.linkchecker.commands.config.Config;
 import com.dynxsty.linkchecker.commands.dao.GuildSlashSubCommand;
 import com.dynxsty.linkchecker.properties.ConfigTimeUnit;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
