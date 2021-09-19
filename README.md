@@ -1,6 +1,6 @@
 # InviteLinkChecker
 
-A Discord Bot, that checks if an (custom) invite link is taken or not - written in Java using [JDA](https://github.com/DV8FromTheWorld/JDA/)
+A Discord Bot, that checks if an (custom) invite link is taken - written in Java using [JDA](https://github.com/DV8FromTheWorld/JDA/)
 
 # Usage
 
