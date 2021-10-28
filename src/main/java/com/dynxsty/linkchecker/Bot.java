@@ -1,5 +1,6 @@
 package com.dynxsty.linkchecker;
 
+import com.dynxsty.linkchecker.listener.InteractionListener;
 import com.dynxsty.linkchecker.listener.SlashCommand;
 import com.dynxsty.linkchecker.properties.ConfigInt;
 import com.dynxsty.linkchecker.properties.ConfigString;
@@ -32,7 +33,7 @@ public class Bot {
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .enableCache(CacheFlag.ACTIVITY)
                 .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
-                .addEventListeners(new SlashCommand())
+                .addEventListeners(new SlashCommand(), new InteractionListener())
                 .build();
     }
 
