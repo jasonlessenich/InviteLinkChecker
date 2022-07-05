@@ -1,4 +1,4 @@
-package com.dynxsty.linkchecker.commands.user;
+package com.dynxsty.linkchecker.commands.user_commands;
 
 import com.dynxsty.dih4jda.interactions.commands.SlashCommand;
 import com.dynxsty.linkchecker.Constants;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BotInfoCommand extends SlashCommand {
 	public BotInfoCommand() {
-		setSlashCommandData(Commands.slash("botinfo", "Displays some information about the Bot"));
+		setSlashCommandData(Commands.slash("botinfo", "Displays some information about the Bot."));
 	}
 
 	@Override

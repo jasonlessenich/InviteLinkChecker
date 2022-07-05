@@ -1,7 +1,7 @@
-package com.dynxsty.linkchecker.commands.config.subcommands;
+package com.dynxsty.linkchecker.commands.config_commands.subcommands;
 
 import com.dynxsty.dih4jda.interactions.commands.SlashCommand;
-import com.dynxsty.linkchecker.commands.config.ConfigCommand;
+import com.dynxsty.linkchecker.commands.config_commands.ConfigCommand;
 import com.dynxsty.linkchecker.properties.ConfigElement;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ResetTotalCheckCountSubcommand extends SlashCommand.Subcommand {
 	public ResetTotalCheckCountSubcommand() {
-		setSubcommandData(new SubcommandData("reset-tcc", "resets the total check count"));
+		setSubcommandData(new SubcommandData("reset-count", "Resets the current total Check Count."));
 	}
 
 	@Override

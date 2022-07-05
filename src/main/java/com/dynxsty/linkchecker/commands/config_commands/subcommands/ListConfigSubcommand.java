@@ -1,4 +1,4 @@
-package com.dynxsty.linkchecker.commands.config.subcommands;
+package com.dynxsty.linkchecker.commands.config_commands.subcommands;
 
 import com.dynxsty.dih4jda.interactions.commands.SlashCommand;
 import com.dynxsty.linkchecker.Bot;
@@ -14,9 +14,8 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class ListConfigSubcommand extends SlashCommand.Subcommand {
-
 	public ListConfigSubcommand() {
-		setSubcommandData(new SubcommandData("list", "shows the current bot configuration"));
+		setSubcommandData(new SubcommandData("list", "Shows the current Bot Configuration."));
 	}
 
 	@Override

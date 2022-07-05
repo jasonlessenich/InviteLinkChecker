@@ -1,4 +1,4 @@
-package com.dynxsty.linkchecker.commands.user;
+package com.dynxsty.linkchecker.commands.user_commands;
 
 import com.dynxsty.dih4jda.interactions.commands.SlashCommand;
 import com.dynxsty.linkchecker.Constants;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class UptimeCommand extends SlashCommand {
 	public UptimeCommand() {
-		setSlashCommandData(Commands.slash("uptime", "Checks the Bot's Uptime"));
+		setSlashCommandData(Commands.slash("uptime", "Checks the Bot's Uptime."));
 	}
 
 	@Override

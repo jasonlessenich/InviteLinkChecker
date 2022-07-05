@@ -6,7 +6,6 @@ import com.dynxsty.linkchecker.Constants;
 import java.io.*;
 import java.util.Properties;
 
-
 public class BotProperties {
 	protected final String entryname;
 
