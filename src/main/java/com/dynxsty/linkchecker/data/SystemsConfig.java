@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public final class BotConfiguration {
+public final class SystemsConfig {
 	private String botToken = "";
 	private String inviteCode = "java";
 

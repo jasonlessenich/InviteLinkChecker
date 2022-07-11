@@ -15,10 +15,10 @@ import java.nio.file.Path;
  * The base container class for all the bot's configuration.
  */
 @Slf4j
-public final class BotConfigManager {
+public final class BotConfig {
 	private static final String CONFIG_FILE = "config.yaml";
 
-	private final BotConfiguration config;
+	private final SystemsConfig config;
 
 	/**
 	 * The path from which the config was loaded.
@@ -31,7 +31,7 @@ public final class BotConfigManager {
 	 * @param dir The path to the directory containing the guild configuration
 	 *            files.
 	 */
-	public BotConfigManager(Path dir) {
+	public BotConfig(Path dir) {
 		this.dir = dir;
 		if (!(Files.exists(dir) && Files.isDirectory(dir))) {
 			if (!Files.exists(dir)) {
@@ -48,7 +48,7 @@ public final class BotConfigManager {
 		Path systemsFile = dir.resolve(CONFIG_FILE);
 		if (Files.exists(systemsFile)) {
 			try (BufferedReader reader = Files.newBufferedReader(systemsFile)) {
-				this.config = yaml.loadAs(reader, BotConfiguration.class);
+				this.config = yaml.loadAs(reader, SystemsConfig.class);
 				log.info("Loaded systems config from {}", systemsFile);
 			} catch (YAMLException e) {
 				log.error("Invalid JSON found! Please fix or remove config file " + systemsFile + " and restart.", e);
@@ -58,12 +58,12 @@ public final class BotConfigManager {
 			}
 		} else {
 			log.info("No systems config file found. Creating an empty one at {}", systemsFile);
-			this.config = new BotConfiguration();
+			this.config = new SystemsConfig();
 			this.flush();
 		}
 	}
 
-	public BotConfiguration getConfig() {
+	public SystemsConfig getConfig() {
 		return this.config;
 	}
 
