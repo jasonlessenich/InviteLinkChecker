@@ -1,0 +1,20 @@
+# Your bot's token. This can be found at https://discord.com/developers/applications/
+botToken: 'YOUR_BOT_TOKEN'
+# The invite code you want to check for. 'java' will check for discord.gg/java
+inviteCode: java
+timerConfig:
+  # The amount of 'timeUnit' to check. An interval of 30 combines with a TimeUnit of 'SECONDS' will
+  # check every 30 seconds.
+    interval: 30
+  # An enum of java.util.concurrent.TimeUnit. e.g. SECONDS, MINUTES, HOURS, ...
+    timeUnit: SECONDS
+webhookConfigs:
+  # A list of possible webhooks.
+  - {
+    # Whether the bot should sent a message to a webhook once the invite code is not in use.
+    useWebhook: false,
+    # Your webhook url.
+    # This can be found under YOUR_CHANNEL > Settings > Integrations > Webhooks > (Create Webhook) > Copy Webhook URL
+    webhookUrl: 'YOUR_WEBHOOK_URL'
+  }
+
