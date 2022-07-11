@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public final class SystemsConfig {
 	private String botToken = "YOUR_BOT_TOKEN";
-	private String inviteCode = "java";
+	private String inviteCode = "YOUR_INVITE_CODE";
 
 	private TimerConfig timerConfig = new TimerConfig();
 

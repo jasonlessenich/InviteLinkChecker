@@ -1,7 +1,7 @@
 # Your bot's token. This can be found at https://discord.com/developers/applications/
 botToken: 'YOUR_BOT_TOKEN'
 # The invite code you want to check for. 'java' will check for discord.gg/java
-inviteCode: java
+inviteCode: 'YOUR_INVITE_CODE'
 timerConfig:
   # The amount of 'timeUnit' to check. An interval of 30 combines with a TimeUnit of 'SECONDS' will
   # check every 30 seconds.
