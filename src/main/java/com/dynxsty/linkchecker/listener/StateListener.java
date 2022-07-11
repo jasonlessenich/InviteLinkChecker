@@ -4,6 +4,7 @@ import com.dynxsty.linkchecker.Bot;
 import com.dynxsty.linkchecker.check.LinkChecker;
 import com.dynxsty.linkchecker.data.SystemsConfig;
 import com.dynxsty.linkchecker.utils.StringUtils;
+import com.dynxsty.linkchecker.utils.WebhookUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -22,6 +23,8 @@ public class StateListener extends ListenerAdapter {
 			log.error("\"{}\" is not a valid enum of java.util.concurrent.TimeUnit!", timer.getTimeUnit());
 			System.exit(0);
 		}
+		WebhookUtils.sendToAllWebhooks("I've been booted up! Checking for discord.gg/%s every %s %s!",
+				Bot.config.getInviteCode(), timer.getInterval(), timer.getTimeUnit());
 		new LinkChecker(event.getJDA(), timer.getInterval(), TimeUnit.valueOf(timer.getTimeUnit()));
 	}
 }

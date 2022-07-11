@@ -1,6 +1,8 @@
 package com.dynxsty.linkchecker.check;
 
 import com.dynxsty.linkchecker.Bot;
+import com.dynxsty.linkchecker.data.SystemsConfig;
+import com.dynxsty.linkchecker.utils.WebhookUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Invite;
@@ -42,17 +44,7 @@ public class LinkChecker extends ListenerAdapter {
 							invite.getGuild().getMemberCount(), invite.getGuild().getOnlineCount()));
 		} else {
 			log.warn("discord.gg/{} is available!", code);
-			//MessageEmbed embed = new EmbedBuilder()
-			//		.setColor(Constants.EMBED_GRAY)
-			//		.setThumbnail(jda.getSelfUser().getEffectiveAvatarUrl())
-			//		.setDescription("discord.gg/" + code + " is available!")
-			//		.setTimestamp(Instant.now())
-			//		.build();
-			//jda.getGuildById(new ConfigElement<>("guild_id", Long.class).getValue())
-			//		.getTextChannelById(new ConfigElement<>("text_id", Long.class).getValue())
-			//		.sendMessage(new ConfigElement<>("link_available_msg", String.class).getValue())
-			//		.setEmbeds(embed)
-			//		.queue();
+			WebhookUtils.sendToAllWebhooks("discord.gg/%s is not taken!", code);
 		}
 	}
 }

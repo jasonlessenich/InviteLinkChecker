@@ -23,7 +23,12 @@ dependencies {
         exclude(module = "opus-java")
     }
     implementation("ch.qos.logback:logback-classic:1.2.11")
+
+    // Configuration
     implementation("org.yaml:snakeyaml:1.30")
+
+    // Webhooks
+    implementation("club.minnced:discord-webhooks:0.8.0")
 
     // Lombok Annotations
     compileOnly("org.projectlombok:lombok:1.18.24")
