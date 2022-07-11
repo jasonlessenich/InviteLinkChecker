@@ -23,5 +23,6 @@ public final class SystemsConfig {
 	public static class WebhookConfig {
 		private boolean useWebhook = false;
 		private String webhookUrl = "YOUR_WEBHOOK_URL";
+		private String linkAvailableMessage = "discord.gg/%s is available!";
 	}
 }
