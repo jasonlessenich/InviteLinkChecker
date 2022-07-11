@@ -23,7 +23,9 @@ dependencies {
         exclude(module = "opus-java")
     }
     implementation("com.github.DynxstyGIT:DIH4JDA:1.5.5")
+
     implementation("ch.qos.logback:logback-classic:1.2.11")
+    implementation("org.yaml:snakeyaml:1.30")
 
     // Lombok Annotations
     compileOnly("org.projectlombok:lombok:1.18.24")
