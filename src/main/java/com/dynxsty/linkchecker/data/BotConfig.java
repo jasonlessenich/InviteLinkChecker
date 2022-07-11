@@ -51,7 +51,7 @@ public final class BotConfig {
 				this.config = yaml.loadAs(reader, SystemsConfig.class);
 				log.info("Loaded systems config from {}", systemsFile);
 			} catch (YAMLException e) {
-				log.error("Invalid JSON found! Please fix or remove config file " + systemsFile + " and restart.", e);
+				log.error("Invalid YAML found! Please fix or remove config file " + systemsFile + " and restart.", e);
 				throw e;
 			} catch (IOException e) {
 				throw new UncheckedIOException(e);

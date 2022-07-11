@@ -7,9 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
+import java.io.File;
 import java.nio.file.Path;
-import java.time.ZoneOffset;
-import java.util.TimeZone;
+import java.nio.file.Paths;
 
 @Slf4j
 public class Bot {
@@ -20,8 +20,7 @@ public class Bot {
 	public static SystemsConfig config;
 
 	public static void main(String[] args) throws Exception {
-		TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC));
-		config = new BotConfig(Path.of("")).getConfig();
+		config = new BotConfig(Paths.get("")).getConfig();
 		JDA jda = JDABuilder.createLight(config.getBotToken()).build();
 		jda.addEventListener(new StateListener());
 	}

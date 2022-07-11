@@ -15,7 +15,7 @@ webhookConfigs:
     useWebhook: false,
     # Your webhook url.
     # This can be found under YOUR_CHANNEL > Settings > Integrations > Webhooks > (Create Webhook) > Copy Webhook URL
-    webhookUrl: 'YOUR_WEBHOOK_URL'
+    webhookUrl: 'YOUR_WEBHOOK_URL',
     # The message which will be sent when the link is available. Please note that '%s' is a format specifier which
     # holds the 'inviteCode'.
     linkAvailableMessage: 'discord.gg/%s is available!'

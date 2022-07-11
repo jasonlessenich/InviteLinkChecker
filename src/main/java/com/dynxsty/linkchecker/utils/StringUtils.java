@@ -8,16 +8,14 @@ import static com.dynxsty.linkchecker.Bot.config;
 
 @Slf4j
 public class StringUtils {
-	private StringUtils() {}
+	private StringUtils() {
+	}
 
 	public static void listConfig(@NotNull JDA jda) {
-		log.info("""
-						 
-						                
-						[*] Logged in as {}
-						Invite Link: discord.gg/{}
-						Interval: {} {}           
-						""", jda.getSelfUser().getAsTag(), config.getInviteCode(),
+		log.info("\n\n[*] Logged in as {}" +
+						"\nInvite Link: discord.gg/{}" +
+						"\nInterval: {} {}\n",
+				jda.getSelfUser().getAsTag(), config.getInviteCode(),
 				config.getTimerConfig().getInterval(), config.getTimerConfig().getTimeUnit()
 		);
 	}

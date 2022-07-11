@@ -2,6 +2,7 @@ package com.dynxsty.linkchecker.data;
 
 import lombok.Data;
 
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -11,7 +12,7 @@ public final class SystemsConfig {
 
 	private TimerConfig timerConfig = new TimerConfig();
 
-	private List<WebhookConfig> webhookConfigs = List.of(new WebhookConfig());
+	private List<WebhookConfig> webhookConfigs = Collections.singletonList(new WebhookConfig());
 
 	@Data
 	public static class TimerConfig {
