@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public final class SystemsConfig {
-	private String botToken = "";
+	private String botToken = "YOUR_BOT_TOKEN";
 	private String inviteCode = "java";
 
 	private TimerConfig timerConfig = new TimerConfig();
@@ -22,6 +22,6 @@ public final class SystemsConfig {
 	@Data
 	public static class WebhookConfig {
 		private boolean useWebhook = false;
-		private String webhookUrl = "";
+		private String webhookUrl = "YOUR_WEBHOOK_URL";
 	}
 }
