@@ -11,7 +11,7 @@ timerConfig:
 webhookConfigs:
   # A list of possible webhooks.
   - {
-    # Whether the bot should sent a message to a webhook once the invite code is not in use.
+    # Whether the bot should send a message to a webhook once the invite code is not in use.
     useWebhook: false,
     # Your webhook url.
     # This can be found under YOUR_CHANNEL > Settings > Integrations > Webhooks > (Create Webhook) > Copy Webhook URL
