@@ -1,7 +1,6 @@
 package com.dynxsty.linkchecker.check;
 
 import com.dynxsty.linkchecker.Bot;
-import com.dynxsty.linkchecker.data.SystemsConfig;
 import com.dynxsty.linkchecker.utils.WebhookUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;

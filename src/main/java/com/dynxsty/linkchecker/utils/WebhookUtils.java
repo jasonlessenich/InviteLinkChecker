@@ -10,7 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 
 public class WebhookUtils {
-	private WebhookUtils() {}
+	private WebhookUtils() {
+	}
 
 	public static void sendToAllWebhooks(String message, Object... args) {
 		for (SystemsConfig.WebhookConfig config : Bot.config.getWebhookConfigs()) {
