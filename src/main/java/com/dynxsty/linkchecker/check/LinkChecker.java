@@ -28,9 +28,9 @@ public class LinkChecker extends ListenerAdapter {
 			String code = new ConfigElement<>("code", String.class).getValue();
 			if (checkLink(jda, code)) {
 				Invite.resolve(jda, code).queue(invite ->
-						log.info("{}[{}/{}]{} discord.gg/{} is taken ({}, {})",
-								Constants.TEXT_WHITE, i, new ConfigElement<>("totalCheckCount", Integer.class).getValue(), Constants.TEXT_RESET,
-								code, invite.getGuild().getName(), invite.getGuild().getId()));
+						log.info("[{}/{}] discord.gg/{} is taken by: {} ({})",
+								i, new ConfigElement<>("totalCheckCount", Integer.class).getValue(), code,
+								invite.getGuild().getName(), invite.getGuild().getId()));
 			} else {
 				log.warn("discord.gg/{} is available!", code);
 				MessageEmbed embed = new EmbedBuilder()

@@ -38,7 +38,7 @@ java {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "xyz.ratingtool.bot.Bot"
+        attributes["Main-Class"] = "com.dynxsty.linkchecker.Bot"
     }
 }
 

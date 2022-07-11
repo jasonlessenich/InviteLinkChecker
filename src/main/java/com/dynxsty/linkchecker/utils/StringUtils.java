@@ -17,14 +17,12 @@ public class StringUtils {
 						 
 						                
 						[*] Logged in as {}
-						Token: {}
 						Owner: {}
 						Invite Link: discord.gg/{}
-						Interval: {} {} ({} checks total)             
-						""", jda.getSelfUser().getAsTag(), new ConfigElement<>("token", String.class).getValue(),
-				new ConfigElement<>("owner_id", String.class).getValue(), new ConfigElement<>("code", String.class).getValue(),
-				new ConfigElement<>("interval", String.class).getValue(), new ConfigElement<>("timeunit", TimeUnit.class).getValue(),
-				new ConfigElement<>("totalCheckCount", Integer.class).getValue());
+						Interval: {} {} ({} checks total)           
+						""", jda.getSelfUser().getAsTag(), new ConfigElement<>("owner_id", String.class).getValue(),
+				new ConfigElement<>("code", String.class).getValue(), new ConfigElement<>("interval", String.class).getValue(),
+				new ConfigElement<>("timeunit", TimeUnit.class).getValue(), new ConfigElement<>("totalCheckCount", Integer.class).getValue());
 	}
 
 	public static String formatUptime() {
