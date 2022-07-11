@@ -22,6 +22,6 @@ public class StateListener extends ListenerAdapter {
 			log.error("\"{}\" is not a valid enum of java.util.concurrent.TimeUnit!", timer.getTimeUnit());
 			System.exit(0);
 		}
-		LinkChecker.startCheck(event.getJDA(), timer.getInterval(), TimeUnit.valueOf(timer.getTimeUnit()));
+		new LinkChecker(event.getJDA(), timer.getInterval(), TimeUnit.valueOf(timer.getTimeUnit()));
 	}
 }
