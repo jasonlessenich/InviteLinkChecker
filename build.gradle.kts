@@ -22,8 +22,6 @@ dependencies {
     implementation("net.dv8tion:JDA:5.0.0-alpha.13") {
         exclude(module = "opus-java")
     }
-    implementation("com.github.DynxstyGIT:DIH4JDA:1.5.5")
-
     implementation("ch.qos.logback:logback-classic:1.2.11")
     implementation("org.yaml:snakeyaml:1.30")
 
