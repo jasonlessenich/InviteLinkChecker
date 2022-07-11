@@ -1,0 +1,1 @@
+java -jar LinkChecker-all.jar
