@@ -6,7 +6,8 @@ import java.util.List;
 
 @Data
 public final class BotConfiguration {
-	private String inviteCode = "python";
+	private String botToken = "";
+	private String inviteCode = "java";
 
 	private TimerConfig timerConfig = new TimerConfig();
 
