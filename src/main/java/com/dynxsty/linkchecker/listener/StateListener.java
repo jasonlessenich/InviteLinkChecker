@@ -23,6 +23,7 @@ public class StateListener extends ListenerAdapter {
 			log.error("\"{}\" is not a valid enum of java.util.concurrent.TimeUnit!", timer.getTimeUnit());
 			System.exit(0);
 		}
+		WebhookUtils.checkWebhookUrls();
 		WebhookUtils.sendToAllWebhooks("I've been booted up! Checking for discord.gg/%s every %s %s!",
 				Bot.config.getInviteCode(), timer.getInterval(), timer.getTimeUnit());
 		new LinkChecker(event.getJDA(), timer.getInterval(), TimeUnit.valueOf(timer.getTimeUnit()));
