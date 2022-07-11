@@ -43,7 +43,7 @@ public class LinkChecker extends ListenerAdapter {
 							invite.getGuild().getMemberCount(), invite.getGuild().getOnlineCount()));
 		} else {
 			log.warn("discord.gg/{} is available!", code);
-			WebhookUtils.sendToAllWebhooks("discord.gg/%s is not taken!", code);
+			WebhookUtils.alertAllWebhooks(code);
 		}
 	}
 }

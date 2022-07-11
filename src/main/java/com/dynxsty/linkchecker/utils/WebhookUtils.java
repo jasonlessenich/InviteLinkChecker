@@ -12,6 +12,14 @@ public class WebhookUtils {
 	private WebhookUtils() {
 	}
 
+	public static void alertAllWebhooks(String code) {
+		for (SystemsConfig.WebhookConfig config : Bot.config.getWebhookConfigs()) {
+			if (config.isUseWebhook() && checkWebhookUrl(config.getWebhookUrl())) {
+				WebhookUtils.sendMessageToWebhook(config.getWebhookUrl(), config.getLinkAvailableMessage(), code);
+			}
+		}
+	}
+
 	public static void sendToAllWebhooks(String message, Object... args) {
 		for (SystemsConfig.WebhookConfig config : Bot.config.getWebhookConfigs()) {
 			if (config.isUseWebhook() && checkWebhookUrl(config.getWebhookUrl())) {
