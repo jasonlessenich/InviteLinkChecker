@@ -19,7 +19,7 @@ public class StateListener extends ListenerAdapter {
 	public void onReady(@NotNull ReadyEvent event) {
 		StringUtils.listConfig(event.getJDA());
 		SystemsConfig.TimerConfig timer = Bot.config.getTimerConfig();
-		if (Arrays.asList(TimeUnit.values()).stream().noneMatch(t -> t.toString().equals(timer.getTimeUnit()))) {
+		if (Arrays.stream(TimeUnit.values()).noneMatch(t -> t.toString().equals(timer.getTimeUnit()))) {
 			log.error("\"{}\" is not a valid enum of java.util.concurrent.TimeUnit!", timer.getTimeUnit());
 			System.exit(0);
 		}
