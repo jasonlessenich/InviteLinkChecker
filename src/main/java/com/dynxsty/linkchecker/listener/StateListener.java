@@ -24,8 +24,8 @@ public class StateListener extends ListenerAdapter {
 			System.exit(0);
 		}
 		WebhookUtils.checkWebhookUrls();
-		WebhookUtils.sendToAllWebhooks("I've been booted up! Checking for discord.gg/%s every %s %s!",
-				Bot.config.getInviteCode(), timer.getInterval(), timer.getTimeUnit());
+		WebhookUtils.sendToAllWebhooks("I've been booted up! I'll be checking discord.gg/%s every %s %s.",
+				Bot.config.getInviteCode(), timer.getInterval(), timer.getTimeUnit().toLowerCase());
 		new LinkChecker(event.getJDA(), timer.getInterval(), TimeUnit.valueOf(timer.getTimeUnit()));
 	}
 }
